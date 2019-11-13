@@ -8,8 +8,7 @@ import (
 )
 
 type Post struct {
-	Username string `form:"username" binding:"required"`
-	Password string `form:"password" binding:"required"`
+	MyWord string `form:"MyWord" binding:"required"`
 }//用binding包定义一个结构体Post
 
 func Begin(port string) {
@@ -24,9 +23,9 @@ func Begin(port string) {
 	}) //GET请求，获取当前时间，并渲染index模板，传入获取的时间信息
 
 	m.Post("/", binding.Bind(Post{}), func(post Post, r render.Render) {
-		p := Post{Username: post.Username, Password: post.Password}
+		p := Post{MyWord: post.MyWord}
 		r.HTML(200, "info", map[string]interface{}{"post": p})
-	}) //POST请求，渲染info模板，传入登录页面填写的用户信息
+	}) //POST请求，渲染info模板，传入页面1填写的话语内容
 
 	m.RunOnAddr(":" + port) //在端口开始运行
 }
